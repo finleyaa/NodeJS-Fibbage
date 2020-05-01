@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Rubik", sans-serif;
+}
+
+#nickname-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#nickname-input {
+    display: block;
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 3px;
+    background-color: rgb(200, 200, 200);
+    border: none;
+    margin: 20px;
+    font-family: "Rubik", sans-serif;
+}
+
+#nickname-submit {
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    font-family: "Rubik", sans-serif;
+    font-size: 20px;
+    padding: 10px 15px;
+    background-color: rgb(100, 100, 100);
+    border: none;
+    border-radius: 3px;
+    color: white;
+}
