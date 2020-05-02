@@ -29,6 +29,7 @@ io.on("connection", (sock) => {
 
     sock.on("nickname", (nickObject) => {
         currentGame._setNickname(nickObject);
+        currentGame._updatePreGameScreen(io);
     });
 });
 
