@@ -5,6 +5,11 @@ const requestNickname = (id) => {
     console.log(playerid);
     document.body.innerHTML = "";
     console.log("Nickname requested by server");
+    let nickWrapper = document.createElement("div");
+    nickWrapper.id = "nickname-wrapper";
+    let nickHeader = document.createElement("p");
+    nickHeader.id = "nickname-header";
+    nickHeader.innerHTML = "Welcome to Quiplash!";
     let nickForm = document.createElement("form");
     nickForm.id = "nickname-form";
     nickForm.addEventListener("submit", nickFormSubmitted);
@@ -17,7 +22,9 @@ const requestNickname = (id) => {
 
     nickForm.appendChild(textBox);
     nickForm.appendChild(submit);
-    document.body.appendChild(nickForm);
+    nickWrapper.appendChild(nickHeader);
+    nickWrapper.appendChild(nickForm);
+    document.body.appendChild(nickWrapper);
 };
 
 const nickFormSubmitted = (e) => {

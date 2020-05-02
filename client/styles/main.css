@@ -3,38 +3,58 @@ body {
     padding: 0;
     font-family: "Rubik", sans-serif;
     box-sizing: border-box;
+    background-color: #bdd4ff;
 }
 
-#nickname-form {
+#nickname-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
+#nickname-header {
+    width: 100%;
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    margin: 0 auto;
+    color: #2e57ab;
+}
+
 #nickname-input {
+    box-sizing: border-box;
     display: block;
     padding: 10px;
-    font-size: 30px;
+    font-size: 25px;
     text-align: center;
-    border-radius: 3px;
-    background-color: rgb(200, 200, 200);
+    border-radius: 13px;
+    background-color: #e5eeff;
     border: none;
-    margin: 20px;
+    margin: 50px auto 20px auto;
     font-family: "Rubik", sans-serif;
+    width: 30vw;
+    height: 55px;
+    color: #4277db;
+}
+
+#nickname-input::placeholder {
+    color: #77a6ff;
 }
 
 #nickname-submit {
+    box-sizing: border-box;
     display: block;
     margin: 0 auto;
     position: relative;
     font-family: "Rubik", sans-serif;
-    font-size: 20px;
-    padding: 10px 15px;
-    background-color: rgb(100, 100, 100);
+    font-size: 25px;
+    padding: 10px 35px;
+    background-color: #77a6ff;
     border: none;
-    border-radius: 3px;
+    border-radius: 13px;
     color: white;
+    height: 55px;
 }
 
 #ply-wrapper {
@@ -56,4 +76,24 @@ body {
     display: inline-block;
     font-size: 40px;
     padding: 0;
+}
+
+@media only screen and (max-width: 754px) {
+    #nickname-header {
+        font-size: 40px;
+    }
+
+    #nickname-input {
+        width: 75vw;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 10px;
+        margin-top: 40px;
+    }
+
+    #nickname-submit {
+        height: 40px;
+        font-size: 18px;
+        border-radius: 10px;
+    }
 }
