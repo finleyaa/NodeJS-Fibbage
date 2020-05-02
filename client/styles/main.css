@@ -6,6 +6,11 @@ body {
     background-color: #bdd4ff;
 }
 
+body * {
+    font-family: "Rubik", sans-serif;
+    box-sizing: border-box;
+}
+
 #nickname-wrapper {
     position: absolute;
     top: 50%;
@@ -23,7 +28,6 @@ body {
 }
 
 #nickname-input {
-    box-sizing: border-box;
     display: block;
     padding: 10px;
     font-size: 25px;
@@ -32,7 +36,6 @@ body {
     background-color: #e5eeff;
     border: none;
     margin: 50px auto 20px auto;
-    font-family: "Rubik", sans-serif;
     width: 30vw;
     height: 55px;
     color: #4277db;
@@ -43,11 +46,9 @@ body {
 }
 
 #nickname-submit {
-    box-sizing: border-box;
     display: block;
     margin: 0 auto;
     position: relative;
-    font-family: "Rubik", sans-serif;
     font-size: 25px;
     padding: 10px 35px;
     background-color: #77a6ff;
@@ -57,25 +58,56 @@ body {
     height: 55px;
 }
 
+#pregame-header {
+    font-size: 50px;
+    font-weight: bold;
+    color: #2e57ab;
+    width: 100vw;
+    text-align: center;
+    margin: 80px 0px;
+}
+
+#pregame-connected,
+#moreplayers-footer {
+    color: #2e57ab;
+    font-size: 35px;
+    font-weight: bold;
+    width: 100vw;
+    text-align: center;
+}
+
 #ply-wrapper {
     display: flex;
-    justify-content: space-around;
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
     height: 50vh;
-    padding: 100px;
-    box-sizing: border-box;
+    color: #2e57ab;
 }
 
 .ply-div {
     display: inline-block;
+    margin: 26px;
 }
 
 .ply-nick {
     display: inline-block;
-    font-size: 40px;
+    font-size: 30px;
     padding: 0;
+    margin: 0;
+}
+
+#startgame-submit {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 35px;
+    padding: 10px 40px;
+    color: #e5eeff;
+    background-color: #77a6ff;
+    border: none;
+    border-radius: 13px;
+    box-sizing: content-box;
 }
 
 @media only screen and (max-width: 754px) {
@@ -95,5 +127,39 @@ body {
         height: 40px;
         font-size: 18px;
         border-radius: 10px;
+    }
+
+    #pregame-header {
+        font-size: 30px;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+
+    #ply-wrapper {
+        height: 50vh;
+    }
+
+    .ply-div {
+        margin: 5% 0;
+    }
+
+    .ply-nick {
+        font-size: 20px;
+    }
+
+    #pregame-connected,
+    #moreplayers-footer {
+        font-size: 25px;
+        padding: 0 20px;
+    }
+
+    #pregame-connected {
+        margin-top: 0;
+    }
+
+    #startgame-submit {
+        font-size: 25px;
+        padding: 10px 0;
+        width: 200px;
     }
 }

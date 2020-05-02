@@ -17,7 +17,7 @@ const requestNickname = (id) => {
     textBox.id = "nickname-input";
     textBox.placeholder = "Nickname";
     let submit = document.createElement("button");
-    submit.innerText = "Set Nickname";
+    submit.innerText = "Set nickname";
     submit.id = "nickname-submit";
 
     nickForm.appendChild(textBox);
@@ -42,10 +42,10 @@ const preGameScreen = (preGameInfo) => {
     let players = preGameInfo.players;
     let leader = preGameInfo.leader;
     document.body.innerHTML = "";
-    if (leader) {
-        // Display start game button
-    }
     // Display all connected players (images and nicknames)
+    let waitingHeader = document.createElement("p");
+    waitingHeader.innerHTML = "Waiting for leader to start...";
+    waitingHeader.id = "pregame-header";
     let plyWrapper = document.createElement("div");
     plyWrapper.id = "ply-wrapper";
     players.forEach((ply) => {
@@ -57,7 +57,35 @@ const preGameScreen = (preGameInfo) => {
         plyDiv.appendChild(plyNick);
         plyWrapper.appendChild(plyDiv);
     });
+    let amountConnect = document.createElement("p");
+    amountConnect.id = "pregame-connected";
+    amountConnect.innerHTML = `${players.length}/${preGameInfo.maxplayers} players connected`;
+    document.body.appendChild(waitingHeader);
     document.body.appendChild(plyWrapper);
+    document.body.appendChild(amountConnect);
+    if (leader == playerid) {
+        // Display start game button
+        if (players.length >= 4) {
+            let startGameForm = document.createElement("form");
+            startGameForm.id = "startgame-form";
+            let startGameButton = document.createElement("button");
+            startGameButton.id = "startgame-submit";
+            startGameButton.innerHTML = "Start game";
+            startGameForm.addEventListener("submit", startGame);
+            startGameForm.appendChild(startGameButton);
+            document.body.appendChild(startGameForm);
+        } else {
+            let morePlayers = document.createElement("p");
+            morePlayers.id = "moreplayers-footer";
+            morePlayers.innerHTML = "Need at least 4 players to start a game";
+            document.body.appendChild(morePlayers);
+        }
+    }
+};
+
+const startGame = (e) => {
+    e.preventDefault();
+    sock.emit("startgame", playerid);
 };
 
 let playerid = -1;

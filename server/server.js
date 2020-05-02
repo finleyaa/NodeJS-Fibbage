@@ -31,6 +31,10 @@ io.on("connection", (sock) => {
         currentGame._setNickname(nickObject);
         currentGame._updatePreGameScreen(io);
     });
+
+    sock.on("startgame", (id) => {
+        currentGame._startGame(id);
+    });
 });
 
 // Check if the server crashes and print the error

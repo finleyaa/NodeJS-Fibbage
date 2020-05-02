@@ -42,11 +42,17 @@ class GameCore {
             delete this._playerStates[id];
             console.log(`Removed player ${id}`);
         });
-        this._updatePreGameScreen();
+        if (Object.keys(this._players).length == 0) {
+            console.log("All players left, resetting available ID to 1");
+            this._nextAvailableId = 1;
+        }
         if (this._gameLeader.sock.disconnected) {
             this._gameLeader = null;
             console.log("Game leader left");
             this._assignNewLeader();
+        }
+        if (Object.keys(this._players).length > 0) {
+            this._updatePreGameScreen();
         }
     }
 
@@ -69,7 +75,11 @@ class GameCore {
                 toUpdate.push(ply.sock);
             }
         });
-        let plyInfo = { players: plyNicks, leader: this._gameLeader.id };
+        let plyInfo = {
+            players: plyNicks,
+            leader: this._gameLeader.id,
+            maxplayers: this._maxPlayers,
+        };
         toUpdate.forEach((sock) => {
             sock.emit("pregame", plyInfo);
         });
@@ -101,6 +111,15 @@ class GameCore {
         this._players[this._nextAvailableId] = { sock: sock, nick: null };
         this._nextAvailableId++;
         return this._nextAvailableId - 1;
+    }
+
+    _startGame(id) {
+        // Check the leader sent the start game request
+        if (id != this._gameLeader.id) {
+            return false;
+        }
+        console.log("Starting a new game");
+        this._roundNumber = 1;
     }
 }
 
