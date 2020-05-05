@@ -147,7 +147,7 @@ class GameCore {
     }
 
     _preload() {
-        let promptsFilePath = "./quiplash_prompts.txt";
+        let promptsFilePath = `${__dirname}/../server/quiplash_prompts.txt`;
         let promptsRaw = fs.readFileSync(promptsFilePath);
         this._prompts = JSON.parse(promptsRaw);
     }
