@@ -33,7 +33,15 @@ io.on("connection", (sock) => {
     });
 
     sock.on("startgame", (id) => {
-        currentGame._startGame(id);
+        currentGame._startGame(id, io);
+    });
+
+    sock.on("timercheck", () => {
+        currentGame._timerRequest(sock);
+    });
+
+    sock.on("answeringend", (playerid) => {
+        currentGame._answeringEndResponse(playerid);
     });
 });
 
@@ -44,4 +52,5 @@ server.on("error", (err) => {
 
 server.listen(PORT, () => {
     console.log(`Server started on ${PORT}`);
+    currentGame._preload();
 });

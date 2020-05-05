@@ -1,5 +1,3 @@
-const checkStatus = (status) => {};
-
 const requestNickname = (id) => {
     playerid = id;
     console.log(playerid);
@@ -88,8 +86,75 @@ const startGame = (e) => {
     sock.emit("startgame", playerid);
 };
 
+const roundStart = (roundInfo) => {
+    roundState = ROUNDSTATES.answering;
+    // Display prompt and answer box with timer
+    // set a timer to request time from server every 5 seconds
+    document.body.innerHTML = "";
+    let roundTimer = document.createElement("p");
+    roundTimer.innerHTML = roundInfo.time;
+    roundTimer.id = "round-timer";
+    document.body.appendChild(roundTimer);
+    currentRoundTimer = setInterval(timerTick, 1000);
+    checkTimer = setInterval(checkServerTimer, checkServerTimerInterval);
+    sock.emit("roundstart", playerid);
+};
+
+const timerTick = () => {
+    let roundTimer = document.getElementById("round-timer");
+    let currentTime = parseInt(roundTimer.innerHTML);
+    roundTimer.innerHTML = currentTime - 1;
+    if (currentTime - 1 <= 0) {
+        answeringEnd();
+    }
+};
+
+const checkServerTimer = () => {
+    sock.emit("timercheck", "timercheck");
+    console.log("Server timer request");
+};
+
+const serverTimerResponse = (time) => {
+    let roundTimer = document.getElementById("round-timer");
+    let clientTime = parseInt(roundTimer.innerHTML);
+    console.log(`Time drift: ${clientTime - time}`);
+    roundTimer.innerHTML = time;
+};
+
+const answeringEnd = () => {
+    roundState = ROUNDSTATES.voting;
+    clearInterval(currentRoundTimer);
+    clearInterval(checkTimer);
+    currentRoundTimer = null;
+    checkTimer = null;
+};
+
+const checkAnsweringEnd = () => {
+    if ((roundState = ROUNDSTATES.Answering)) {
+        answeringEnd();
+        console.log("Answering ended by server");
+    }
+    sock.emit("answeringend", playerid);
+    // WAITING FOR RESULTS SCREEN HTML & CSS
+};
+
+const checkServerTimerInterval = 5000; // Time delay between checking the server timer
+
+const ROUNDSTATES = {
+    answering: "answering",
+    voting: "voting",
+    postround: "postround",
+};
+
+let roundState = null;
+let checkTimer = null;
+let currentRoundTimer = null;
+
 let playerid = -1;
+
 const sock = io();
-sock.on("status", checkStatus);
-sock.on("nickname", requestNickname);
-sock.on("pregame", preGameScreen);
+sock.on("nickname", requestNickname); // Nickname request from server
+sock.on("pregame", preGameScreen); // Pregame request from server
+sock.on("roundstart", roundStart); // Start round request from server
+sock.on("timercheck", serverTimerResponse); // Response from the server when a client request the server time
+sock.on("answeringend", checkAnsweringEnd); // Server will check that the answering phase has been ended based on the server timer
